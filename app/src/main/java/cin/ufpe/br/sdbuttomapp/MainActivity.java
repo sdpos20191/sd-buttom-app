@@ -12,6 +12,12 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import java.sql.Timestamp;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class MainActivity extends AppCompatActivity {
 
     private FusedLocationProviderClient fusedLocationClient;
@@ -22,29 +28,43 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public void sendMessage(View view) {
+    public void sendOccurrence(View view) {
+        getLastLocation(new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if (location != null) {
+                    System.out.println("Location received: " + location);
+                    Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+                    Occurrence occurrence = new Occurrence(timestamp.getTime(), location.getLatitude(), location.getLongitude());
+                    createOccurrence(occurrence);
+                }
+            }
+        });
+    }
+
+    void getLastLocation(OnSuccessListener<Location> listener) {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
-            // Permission is not granted.
-            System.out.println("not granted");
+            System.out.println("Permission not granted.");
         }
 
         fusedLocationClient.getLastLocation()
-                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-                        if (location != null) {
-                            System.out.println(location);
-                        }
-                    }
-                });
+                .addOnSuccessListener(this, listener);
+    }
 
-//        Intent intent = new Intent(this, DisplayMessageActivity.class);
-//        EditText editText = (EditText) findViewById(R.id.editText2);
-//        String message = editText.getText().toString();
-//        intent.putExtra(EXTRA_MESSAGE, message);
-//        startActivity(intent);
+    void createOccurrence(Occurrence occurrence) {
+        MainApplication.apiManager.createOccurrence(occurrence, new Callback<Occurrence>() {
+            @Override
+            public void onResponse(Call<Occurrence> call, Response<Occurrence> response) {
+                System.out.println(response);
+            }
+
+            @Override
+            public void onFailure(Call<Occurrence> call, Throwable t) {
+                System.err.println(t);
+            }
+        });
     }
 }

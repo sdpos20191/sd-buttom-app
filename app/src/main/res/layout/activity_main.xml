@@ -16,7 +16,7 @@
         android:layout_marginEnd="87dp"
         android:layout_marginRight="87dp"
         android:layout_marginBottom="298dp"
-        android:onClick="sendMessage"
+        android:onClick="sendOccurrence"
         android:text="Send Alert"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

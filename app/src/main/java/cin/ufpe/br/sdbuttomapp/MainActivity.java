@@ -1,6 +1,7 @@
 package cin.ufpe.br.sdbuttomapp;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.v4.content.ContextCompat;
@@ -19,7 +20,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
-
+    public static final String EXTRA_MESSAGE = "cin.ufpe.br.sdbuttomapp.MESSAGE";
     private FusedLocationProviderClient fusedLocationClient;
 
     @Override
@@ -36,7 +37,8 @@ public class MainActivity extends AppCompatActivity {
                     System.out.println("Location received: " + location);
                     Timestamp timestamp = new Timestamp(System.currentTimeMillis());
                     Occurrence occurrence = new Occurrence(timestamp.getTime(), location.getLatitude(), location.getLongitude());
-                    createOccurrence(occurrence);
+                    startSecondActivity(location.getLatitude(), location.getLongitude());
+//                  createOccurrence(occurrence);
                 }
             }
         });
@@ -66,5 +68,12 @@ public class MainActivity extends AppCompatActivity {
                 System.err.println(t);
             }
         });
+    }
+
+    void startSecondActivity(double lat, double lng) {
+        Intent intent = new Intent(this, SecondActivity.class);
+        intent.putExtra("lat", lat);
+        intent.putExtra("long", lng);
+        startActivity(intent);
     }
 }

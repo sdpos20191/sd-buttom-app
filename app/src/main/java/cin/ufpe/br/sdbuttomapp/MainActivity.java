@@ -13,6 +13,8 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.sql.Timestamp;
 
 import retrofit2.Call;
@@ -27,6 +29,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        try {
+            WSClient client = new WSClient(new URI("ws://192.188.188.4:8888"));
+            client.connectBlocking();
+        } catch (Exception e) {
+            System.out.println(e);
+            e.printStackTrace();
+        }
     }
 
     public void sendOccurrence(View view) {

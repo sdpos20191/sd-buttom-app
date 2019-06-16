@@ -14,14 +14,18 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.sql.Timestamp;
 
+import cin.ufpe.br.sdbuttomapp.data.MainApplication;
+import cin.ufpe.br.sdbuttomapp.model.Occurrence;
+import cin.ufpe.br.sdbuttomapp.network.WSClient;
+import cin.ufpe.br.sdbuttomapp.service.NotificationService;
+import cin.ufpe.br.sdbuttomapp.service.OnNotificationEventListener;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnNotificationEventListener {
     public static final String EXTRA_MESSAGE = "cin.ufpe.br.sdbuttomapp.MESSAGE";
     private FusedLocationProviderClient fusedLocationClient;
 
@@ -32,6 +36,10 @@ public class MainActivity extends AppCompatActivity {
         try {
             WSClient client = new WSClient(new URI("ws://192.188.188.4:8888"));
             client.connectBlocking();
+            NotificationService notificationService = new NotificationService();
+            notificationService.registerListener(this);
+            client.setNotification(notificationService);
+
         } catch (Exception e) {
             System.out.println(e);
             e.printStackTrace();
@@ -83,6 +91,12 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, SecondActivity.class);
         intent.putExtra("lat", lat);
         intent.putExtra("long", lng);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onNotificationEvent(Occurrence occurrence) {
+        Intent intent = new Intent(this, AlertActivity.class);
         startActivity(intent);
     }
 }

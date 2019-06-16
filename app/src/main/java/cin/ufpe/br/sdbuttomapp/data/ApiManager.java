@@ -1,8 +1,6 @@
-package cin.ufpe.br.sdbuttomapp;
+package cin.ufpe.br.sdbuttomapp.data;
 
-import android.content.Context;
-import android.content.res.Resources;
-
+import cin.ufpe.br.sdbuttomapp.model.Occurrence;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;

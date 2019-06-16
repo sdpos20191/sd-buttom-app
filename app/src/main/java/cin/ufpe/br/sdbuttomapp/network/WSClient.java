@@ -1,26 +1,41 @@
-package cin.ufpe.br.sdbuttomapp;
+package cin.ufpe.br.sdbuttomapp.network;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
 import java.net.URI;
 
+import cin.ufpe.br.sdbuttomapp.service.NotificationService;
+
 public class WSClient extends WebSocketClient {
 
-    WSClient(URI serverUri) {
+    NotificationService notification;
+
+    public WSClient(URI serverUri) {
         super(serverUri);
+    }
+
+    public void setNotification(NotificationService notification) {
+        this.notification = notification;
     }
 
     @Override
     public void onOpen( ServerHandshake handshakedata ) {
-        send("Hello, it is me. Mario :)");
         System.out.println( "opened connection" );
         // if you plan to refuse connection based on ip or httpfields overload: onWebsocketHandshakeReceivedAsClient
     }
 
     @Override
-    public void onMessage( String message ) {
-        System.out.println( "received: " + message );
+    public void onMessage(final String message ) {
+        new Thread(new Runnable() {
+            @Override
+            public void run()
+            {
+                if (notification != null) {
+                    notification.on(message);
+                }
+            }
+        }).start();
     }
 
     @Override

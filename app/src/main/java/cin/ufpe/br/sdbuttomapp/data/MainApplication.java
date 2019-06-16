@@ -1,8 +1,9 @@
-package cin.ufpe.br.sdbuttomapp;
+package cin.ufpe.br.sdbuttomapp.data;
 
 import android.app.Application;
-import android.content.Context;
-import android.content.res.Resources;
+
+import cin.ufpe.br.sdbuttomapp.R;
+import cin.ufpe.br.sdbuttomapp.data.ApiManager;
 
 public class MainApplication extends Application {
 

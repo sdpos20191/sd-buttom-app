@@ -1,4 +1,4 @@
-package cin.ufpe.br.sdbuttomapp;
+package cin.ufpe.br.sdbuttomapp.model;
 
 public class Occurrence {
 
@@ -6,10 +6,9 @@ public class Occurrence {
     private double lat;
     private double lng;
 
-    Occurrence(long timestamp, double lat, double lng) {
+    public Occurrence(long timestamp, double lat, double lng) {
         this.timestamp = timestamp;
         this.lat = lat;
         this.lng = lng;
     }
-
 }

@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">SD Buttom App</string>
-    <string name="base_uri">http://192.188.188.4:8080/</string>
+    <string name="base_uri">http://192.188.188.4:9094/</string>
     <string name="text">Ocorrência enviada.</string>
 </resources>

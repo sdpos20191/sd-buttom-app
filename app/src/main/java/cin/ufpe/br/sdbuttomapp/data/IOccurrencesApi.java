@@ -7,7 +7,7 @@ import retrofit2.http.POST;
 
 public interface IOccurrencesApi {
 
-    @POST("/occurrences")
+    @POST("/api/v1/ocorrencias")
     Call<Occurrence> createOccurrence(@Body Occurrence occurrence);
 
 }

@@ -15,6 +15,11 @@ import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.net.URI;
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 import cin.ufpe.br.sdbuttomapp.data.MainApplication;
 import cin.ufpe.br.sdbuttomapp.model.Occurrence;
@@ -49,13 +54,16 @@ public class MainActivity extends AppCompatActivity implements OnNotificationEve
     public void sendOccurrence(View view) {
         getLastLocation(new OnSuccessListener<Location>() {
             @Override
-            public void onSuccess(Location location) {
+            public void onSuccess(Location  location) {
                 if (location != null) {
                     System.out.println("Location received: " + location);
                     Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-                    Occurrence occurrence = new Occurrence(timestamp.getTime(), location.getLatitude(), location.getLongitude());
+                    String pattern = "yyyy-MM-dd'T'HH:mm:ssZ";
+                    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+                    String date = dateFormat.format(new Date());
+                    Occurrence occurrence = new Occurrence(date, location.getLatitude(), location.getLongitude());
+                    createOccurrence(occurrence);
                     startSecondActivity(location.getLatitude(), location.getLongitude());
-//                  createOccurrence(occurrence);
                 }
             }
         });

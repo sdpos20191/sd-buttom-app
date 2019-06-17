@@ -2,13 +2,12 @@ package cin.ufpe.br.sdbuttomapp.model;
 
 public class Occurrence {
 
-    private long timestamp;
-    private double lat;
-    private double lng;
+    private String dataHora;
+    private String id;
+    private Location localizacao;
 
-    public Occurrence(long timestamp, double lat, double lng) {
-        this.timestamp = timestamp;
-        this.lat = lat;
-        this.lng = lng;
+    public Occurrence(String dataHora, double lat, double lng) {
+        this.dataHora = dataHora;
+        this.localizacao = new Location(dataHora, lat, lng);
     }
 }

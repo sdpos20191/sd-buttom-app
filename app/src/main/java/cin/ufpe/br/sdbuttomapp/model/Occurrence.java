@@ -10,4 +10,8 @@ public class Occurrence {
         this.dataHora = dataHora;
         this.localizacao = new Location(dataHora, lat, lng);
     }
+
+    public Location getLocalizacao() {
+        return localizacao;
+    }
 }

@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements OnNotificationEve
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        startAlertActivity();
         try {
             WSClient client = new WSClient(new URI("ws://192.188.188.4:8888"));
             client.connectBlocking();

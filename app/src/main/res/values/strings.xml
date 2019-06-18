@@ -2,4 +2,5 @@
     <string name="app_name">SD Buttom App</string>
     <string name="base_uri">http://192.188.188.4:9094/</string>
     <string name="text">Ocorrência enviada.</string>
+    <string name="google_maps_key">AIzaSyCaF7r2sYMWlakwCwS2YzfRdyl2JADEQFI</string>
 </resources>
